@@ -12,6 +12,7 @@ def folder_creation(name):
     }
     folder_url = f'https://cloud-api.yandex.net/v1/disk/resources?path={name}'
     folder_response = requests.put(folder_url, headers=headers)
-    return str(folder_response)
+    is_folder_really_created_response = requests.get(folder_url, headers=headers)
+    return folder_response.status_code, is_folder_really_created_response.status_code
 
-print(folder_creation(''))
+# print(folder_creation(''))
