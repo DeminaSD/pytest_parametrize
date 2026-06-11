@@ -10,6 +10,6 @@ import pytest
     ]
 )
 # Если запрос был обработан без ошибок, API отвечает кодом 201 Created (папка успешно создана), 
-# поэтому проверяется код 201. Однако код 200 (инфо статус) также проверяется вторым параметром
+# поэтому проверяется код 201
 def test_folder_creation(name, expected1, expected2):
     assert folder_creation(name) == (expected1, expected2)
