@@ -4,6 +4,9 @@
 # Код ответа соответствует 200.
 # Результат создания папки - папка появилась в списке файлов.
 import requests
+from pprint import pprint
+import json
+
 token = ''
 
 def folder_creation(name):
@@ -12,7 +15,11 @@ def folder_creation(name):
     }
     folder_url = f'https://cloud-api.yandex.net/v1/disk/resources?path={name}'
     folder_response = requests.put(folder_url, headers=headers)
-    is_folder_really_created_response = requests.get(folder_url, headers=headers)
-    return folder_response.status_code, is_folder_really_created_response.status_code
+    root = f'https://cloud-api.yandex.net/v1/disk/resources?path=/&limit=100'
+    items_list = requests.get(root, headers=headers).json()['_embedded']['items']
+    names_list = [item['name'] for item in items_list]
 
-# print(folder_creation(''))
+    return folder_response.status_code, name in names_list
+
+print(folder_creation(''))
+
